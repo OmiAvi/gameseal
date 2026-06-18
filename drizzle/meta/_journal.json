@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1781795730683,
+      "tag": "0000_easy_rattler",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1781796922642,
+      "tag": "0001_windy_thena",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1781800800000,
+      "tag": "0002_mint_moment_fields",
+      "breakpoints": true
+    }
+  ]
+}
