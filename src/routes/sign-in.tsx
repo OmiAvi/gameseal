@@ -42,70 +42,57 @@ function SignInRoute() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="gs-page-narrow">
       <PageIntro
-        eyebrow="Welcome back"
-        title="Sign in"
-        description="Use your email and password to get back into The Vault."
+        eyebrow="Account access"
+        title="Sign in to your collector profile"
+        description="Use your email and password to get back into your feed, vault, and mint workspace."
       />
 
-      <InfoPanel
-        title="Email access"
-        description="Sign in uses Better Auth with secure sessions stored in Cloudflare D1."
-      >
-        <form
-          className="space-y-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            void onSubmit(new FormData(event.currentTarget))
-          }}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <InfoPanel
+          title="Email access"
+          description="Authentication stays simple here so the product surfaces can stay focused on the moments."
         >
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Email</span>
-            <input
-              required
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="email"
-              type="email"
-            />
-          </label>
-
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Password</span>
-            <input
-              required
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="password"
-              type="password"
-            />
-          </label>
-
-          {error ? (
-            <StateCard title="Sign-in failed" message={error} tone="danger" />
-          ) : null}
-
-          <button
-            type="submit"
-            className="w-full rounded-2xl bg-teal-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-teal-300 disabled:opacity-60"
-            disabled={isSubmitting}
+          <form
+            className="space-y-4"
+            onSubmit={(event) => {
+              event.preventDefault()
+              void onSubmit(new FormData(event.currentTarget))
+            }}
           >
-            {isSubmitting ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
-      </InfoPanel>
+            <label className="gs-form-label">
+              <span>Email</span>
+              <input required className="gs-field" name="email" type="email" />
+            </label>
 
-      <InfoPanel
-        title="Need an account?"
-        description="Create a new collector profile with email, display name, and username."
-      >
-        <Link
-          to="/sign-up"
-          search={{ redirect: search.redirect }}
-          className="text-sm font-medium text-teal-200 no-underline"
+            <label className="gs-form-label">
+              <span>Password</span>
+              <input required className="gs-field" name="password" type="password" />
+            </label>
+
+            {error ? <StateCard title="Sign-in failed" message={error} tone="danger" /> : null}
+
+            <button type="submit" className="gs-button-primary w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
+            </button>
+          </form>
+        </InfoPanel>
+
+        <InfoPanel
+          title="Need an account?"
+          description="Create a new collector identity with display name, username, and email access."
+          muted
         >
-          Go to sign up
-        </Link>
-      </InfoPanel>
+          <Link
+            to="/sign-up"
+            search={{ redirect: search.redirect }}
+            className="inline-flex text-sm font-semibold text-[var(--gs-action)]"
+          >
+            Go to sign up
+          </Link>
+        </InfoPanel>
+      </div>
     </div>
   )
 }

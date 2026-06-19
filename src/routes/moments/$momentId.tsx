@@ -189,51 +189,55 @@ function MomentDetailRoute() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="gs-page">
       <PageIntro
         eyebrow="Saved collectible"
         title={data.title}
         description={`Captured by ${data.creatorDisplayName}. The slab keeps the image sealed while the back preserves the story, venue context, and game details.`}
+        appearance="collectible"
       />
 
       <section className="grid gap-5 lg:grid-cols-[minmax(0,28rem)_minmax(0,1fr)]">
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <MomentCard3D moment={data.card} size="detail" />
+          <div className="gs-collectible-frame">
+            <MomentCard3D moment={data.card} size="detail" />
+          </div>
         </div>
 
         <div className="space-y-5">
           <InfoPanel
             title="Moment details"
             description="Everything entered during mint is preserved here and shown with the same live slab system used in preview."
+            appearance="collectible"
           >
-            <div className="grid gap-3 sm:grid-cols-2 text-sm text-slate-200">
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Venue</p>
-                <p className="mt-2 font-semibold text-white">{data.venueName}</p>
+            <div className="grid gap-3 text-sm sm:grid-cols-2 text-[#e9decb]">
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Venue</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.venueName}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Date</p>
-                <p className="mt-2 font-semibold text-white">{data.dateLabel}</p>
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Date</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.dateLabel}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Matchup</p>
-                <p className="mt-2 font-semibold text-white">{data.matchup}</p>
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Matchup</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.matchup}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Final score</p>
-                <p className="mt-2 font-semibold text-white">{data.finalScore}</p>
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Final score</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.finalScore}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Seat</p>
-                <p className="mt-2 font-semibold text-white">{data.seatInfo}</p>
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Seat</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.seatInfo}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Privacy</p>
-                <p className="mt-2 font-semibold capitalize text-white">{data.visibility}</p>
+              <div className="gs-list-row-dark p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Privacy</p>
+                <p className="mt-2 font-semibold capitalize text-[#fff7e8]">{data.visibility}</p>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4 sm:col-span-2">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Card template</p>
-                <p className="mt-2 font-semibold text-white">{data.templateName}</p>
+              <div className="gs-list-row-dark p-4 sm:col-span-2">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">Card template</p>
+                <p className="mt-2 font-semibold text-[#fff7e8]">{data.templateName}</p>
               </div>
             </div>
           </InfoPanel>
@@ -241,8 +245,9 @@ function MomentDetailRoute() {
           <InfoPanel
             title="Story"
             description="The back of the slab is powered by the same saved story text, so editing this later can update the collectible without turning it into a static image."
+            appearance="collectible"
           >
-            <p className="text-sm leading-6 text-slate-200">
+            <p className="text-sm leading-6 text-[#e9decb]">
               {data.caption?.trim() || 'No story was added for this moment yet.'}
             </p>
           </InfoPanel>
@@ -250,6 +255,7 @@ function MomentDetailRoute() {
           <InfoPanel
             title="Collections"
             description="Create collections, set their visibility, and add or remove this moment from your own curated sets."
+            muted
           >
             {collectionState === 'loading' ? (
               <StateCard
@@ -272,19 +278,16 @@ function MomentDetailRoute() {
             {collections.length > 0 ? (
               <div className="space-y-3">
                 {collections.map((collection) => (
-                  <div
-                    key={collection.id}
-                    className="flex items-center justify-between gap-3 rounded-[1.2rem] border border-white/10 bg-white/5 p-4"
-                  >
+                  <div key={collection.id} className="gs-list-row flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-base font-semibold text-white">{collection.title}</p>
-                      <p className="mt-1 text-sm text-slate-400 capitalize">
+                      <p className="text-base font-semibold text-[var(--gs-ink)]">{collection.title}</p>
+                      <p className="mt-1 text-sm text-[var(--gs-ink-soft)] capitalize">
                         {collection.visibility}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
                       <Link
-                        className="text-sm font-medium text-teal-200 no-underline"
+                        className="text-sm font-semibold text-[var(--gs-action)] no-underline"
                         params={{ collectionId: collection.id }}
                         to="/collections/$collectionId"
                       >
@@ -294,8 +297,8 @@ function MomentDetailRoute() {
                         type="button"
                         className={`rounded-full px-3 py-2 text-sm font-medium transition ${
                           collection.containsMoment
-                            ? 'bg-rose-500/15 text-rose-100 hover:bg-rose-500/25'
-                            : 'bg-amber-400 text-slate-950 hover:bg-amber-300'
+                            ? 'border border-[#dcb7b2] bg-[#fdf0ef] text-[#933f35] hover:bg-[#fae5e3]'
+                            : 'bg-[var(--gs-action)] text-white hover:bg-[#215fe0]'
                         }`}
                         onClick={() => {
                           void toggleCollectionMembership(
@@ -312,28 +315,28 @@ function MomentDetailRoute() {
               </div>
             ) : null}
 
-            <div className="mt-5 space-y-3 rounded-[1.4rem] border border-white/10 bg-slate-950/45 p-4">
-              <p className="text-sm font-semibold text-white">Create collection</p>
-              <label className="block space-y-2 text-sm text-slate-200">
+            <div className="mt-5 space-y-3 rounded-[1.4rem] border border-[var(--gs-border)] bg-white/72 p-4">
+              <p className="text-sm font-semibold text-[var(--gs-ink)]">Create collection</p>
+              <label className="gs-form-label">
                 <span>Title</span>
                 <input
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-field"
                   value={newCollectionTitle}
                   onChange={(event) => setNewCollectionTitle(event.target.value)}
                 />
               </label>
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Description</span>
                 <textarea
-                  className="min-h-24 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-textarea min-h-24"
                   value={newCollectionDescription}
                   onChange={(event) => setNewCollectionDescription(event.target.value)}
                 />
               </label>
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Visibility</span>
                 <select
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-select"
                   value={newCollectionVisibility}
                   onChange={(event) =>
                     setNewCollectionVisibility(
@@ -348,7 +351,7 @@ function MomentDetailRoute() {
               </label>
               <button
                 type="button"
-                className="w-full rounded-2xl bg-amber-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-amber-300 disabled:opacity-60"
+                className="gs-button-primary w-full disabled:opacity-60"
                 disabled={isCreatingCollection}
                 onClick={() => {
                   void createCollection()

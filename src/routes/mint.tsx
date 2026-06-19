@@ -213,26 +213,26 @@ function MintRoute() {
   }
 
   return (
-    <div className="mx-auto max-w-md space-y-5 lg:max-w-6xl">
+    <div className="gs-page">
       <PageIntro
         eyebrow="Primary action"
         title="Mint a new moment"
-        description="Upload the image, capture the game details, and preview the sealed slab before the moment is written to D1 and stored in R2."
+        description="Capture the details in a clean workspace while the slab preview stays premium and live on the side."
       />
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,28rem)]">
         <section className="space-y-5">
           <InfoPanel
             title="Moment details"
             description={`Signed in as ${data.currentUser.email}. This flow stores image files in ${data.mediaBinding} and collectible metadata in ${data.metadataBinding}.`}
           >
             <form className="space-y-4" onSubmit={onSubmit}>
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Upload image</span>
                 <input
                   required
                   accept="image/*"
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-field"
                   name="image"
                   type="file"
                   onChange={(event) => {
@@ -241,21 +241,21 @@ function MintRoute() {
                 />
               </label>
 
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Title</span>
                 <input
                   required
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-field"
                   maxLength={80}
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
               </label>
 
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Caption / story</span>
                 <textarea
-                  className="min-h-28 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-textarea"
                   maxLength={400}
                   value={caption}
                   onChange={(event) => setCaption(event.target.value)}
@@ -263,22 +263,22 @@ function MintRoute() {
               </label>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Venue</span>
                   <input
                     required
                     list="venue-suggestions"
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                    className="gs-field"
                     value={venue}
                     onChange={(event) => setVenue(event.target.value)}
                   />
                 </label>
 
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Date</span>
                   <input
                     required
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                    className="gs-field"
                     type="date"
                     value={date}
                     onChange={(event) => setDate(event.target.value)}
@@ -296,22 +296,22 @@ function MintRoute() {
               </datalist>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Matchup</span>
                   <input
                     required
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                    className="gs-field"
                     placeholder="Comets vs Lions"
                     value={matchup}
                     onChange={(event) => setMatchup(event.target.value)}
                   />
                 </label>
 
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Final score</span>
                   <input
                     required
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                    className="gs-field"
                     placeholder="108-101"
                     value={finalScore}
                     onChange={(event) => setFinalScore(event.target.value)}
@@ -320,42 +320,26 @@ function MintRoute() {
               </div>
 
               <div className="grid grid-cols-3 gap-3">
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Section</span>
-                  <input
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
-                    value={section}
-                    onChange={(event) => setSection(event.target.value)}
-                  />
+                  <input className="gs-field" value={section} onChange={(event) => setSection(event.target.value)} />
                 </label>
 
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Row</span>
-                  <input
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
-                    value={row}
-                    onChange={(event) => setRow(event.target.value)}
-                  />
+                  <input className="gs-field" value={row} onChange={(event) => setRow(event.target.value)} />
                 </label>
 
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Seat</span>
-                  <input
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
-                    value={seat}
-                    onChange={(event) => setSeat(event.target.value)}
-                  />
+                  <input className="gs-field" value={seat} onChange={(event) => setSeat(event.target.value)} />
                 </label>
               </div>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <label className="block space-y-2 text-sm text-slate-200">
+                <label className="gs-form-label">
                   <span>Memory rating</span>
-                  <select
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
-                    value={memoryRating}
-                    onChange={(event) => setMemoryRating(event.target.value)}
-                  >
+                  <select className="gs-select" value={memoryRating} onChange={(event) => setMemoryRating(event.target.value)}>
                     {memoryRatingOptions.map((rating) => (
                       <option key={rating} value={String(rating)}>
                         {rating}/10
@@ -364,10 +348,10 @@ function MintRoute() {
                   </select>
                 </label>
 
-                <label className="block space-y-2 text-sm text-slate-200 sm:col-span-2">
+                <label className="gs-form-label sm:col-span-2">
                   <span>Card template</span>
                   <select
-                    className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                    className="gs-select"
                     value={cardTemplateId}
                     onChange={(event) => setCardTemplateId(event.target.value)}
                   >
@@ -380,10 +364,10 @@ function MintRoute() {
                 </label>
               </div>
 
-              <label className="block space-y-2 text-sm text-slate-200">
+              <label className="gs-form-label">
                 <span>Privacy</span>
                 <select
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"
+                  className="gs-select"
                   value={privacy}
                   onChange={(event) =>
                     setPrivacy(event.target.value as 'public' | 'friends' | 'private')
@@ -395,13 +379,11 @@ function MintRoute() {
                 </select>
               </label>
 
-              {error ? (
-                <StateCard title="Mint failed" message={error} tone="danger" />
-              ) : null}
+              {error ? <StateCard title="Mint failed" message={error} tone="danger" /> : null}
 
               <button
                 type="submit"
-                className="w-full rounded-2xl bg-amber-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-amber-300 disabled:opacity-60"
+                className="gs-button-primary w-full"
                 disabled={isSubmitting || data.templates.length === 0}
               >
                 {isSubmitting ? 'Saving moment...' : 'Mint moment'}
@@ -412,15 +394,16 @@ function MintRoute() {
           <InfoPanel
             title="Storage targets"
             description="This mint writes the image to the media bucket, stores metadata in D1, then redirects to the saved collectible detail page."
+            muted
           >
-            <div className="space-y-3 text-sm text-slate-200">
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
+            <div className="space-y-3 text-sm text-[var(--gs-ink)]">
+              <div className="gs-list-row">
                 Images upload to <strong>{data.mediaBinding}</strong>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
+              <div className="gs-list-row">
                 Metadata saves to <strong>{data.metadataBinding}</strong>
               </div>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
+              <div className="gs-list-row">
                 Draft slots remaining: <strong>{data.draftSlotsRemaining}</strong>
               </div>
             </div>
@@ -428,33 +411,30 @@ function MintRoute() {
         </section>
 
         <section className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <MomentCard3D moment={previewCard} size="detail" />
+          <div className="gs-collectible-frame">
+            <MomentCard3D moment={previewCard} size="detail" />
+          </div>
 
           <InfoPanel
             title="Live slab preview"
-            description="The uploaded image is shown sealed in the slab immediately, and the chosen template drives the front label, badge treatment, and back metadata panel."
+            description="The uploaded image is shown sealed immediately, and the chosen template drives the label, badges, and back metadata treatment."
+            appearance="collectible"
           >
-            <div className="flex flex-wrap gap-2 text-xs text-slate-200">
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <div className="flex flex-wrap gap-2 text-xs">
+              <span className="gs-pill-collectible">
                 {selectedTemplate?.name || 'Template pending'}
               </span>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                {previewCard.dateLabel}
-              </span>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                {previewCard.seatInfo}
-              </span>
+              <span className="gs-pill-collectible">{previewCard.dateLabel}</span>
+              <span className="gs-pill-collectible">{previewCard.seatInfo}</span>
             </div>
           </InfoPanel>
 
           <InfoPanel
             title="Need inspiration?"
             description="The demo gallery shows the same 360 slab system across multiple variants before you lock in the final template."
+            muted
           >
-            <Link
-              to="/moments/demo"
-              className="text-sm font-medium text-amber-200 no-underline"
-            >
+            <Link to="/moments/demo" className="inline-flex text-sm font-semibold text-[var(--gs-action)]">
               Open the Moment Card demo gallery
             </Link>
           </InfoPanel>

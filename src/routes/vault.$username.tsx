@@ -52,13 +52,14 @@ function VaultRoute() {
   )
 
   return (
-    <div className="space-y-5">
+    <div className="gs-page">
       <PageIntro
         eyebrow="Collector profile"
         title={`${data.displayName}'s vault`}
         description={`@${data.username}${data.bio ? ` • ${data.bio}` : ''}`}
+        appearance="collectible"
         action={
-          <div className="rounded-full border border-white/10 bg-slate-950/55 p-3 text-slate-100">
+          <div className="rounded-[1.2rem] border border-[rgba(207,177,118,0.24)] bg-white/8 p-3 text-[#f4e2bf]">
             {data.visibility === 'private' ? (
               <LockKeyhole className="h-5 w-5" />
             ) : (
@@ -68,7 +69,7 @@ function VaultRoute() {
         }
       />
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="gs-stat-grid">
         <StatCard
           label="Visible cards"
           value={data.stats.visibleCardCount === null ? 'Hidden' : String(data.stats.visibleCardCount)}
@@ -89,13 +90,14 @@ function VaultRoute() {
       <InfoPanel
         title="Vault controls"
         description="Switch between collectible slab view and venue map view with a URL-backed mode toggle."
+        muted
       >
         <div className="grid grid-cols-2 gap-2">
           <Link
-            className={`flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm font-medium no-underline transition ${
+            className={`flex items-center justify-center gap-2 rounded-[1rem] border px-4 py-3 text-sm font-medium no-underline transition ${
               view === 'cards'
-                ? 'border-teal-300/30 bg-teal-400/15 text-teal-50'
-                : 'border-white/10 bg-white/5 text-slate-300 hover:text-white'
+                ? 'border-[var(--gs-border-strong)] bg-[var(--gs-ink)] text-white'
+                : 'border-[var(--gs-border)] bg-white/72 text-[var(--gs-ink-soft)] hover:text-[var(--gs-ink)]'
             }`}
             params={{ username: data.username }}
             search={{ view: 'cards' }}
@@ -105,10 +107,10 @@ function VaultRoute() {
             Card view
           </Link>
           <Link
-            className={`flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm font-medium no-underline transition ${
+            className={`flex items-center justify-center gap-2 rounded-[1rem] border px-4 py-3 text-sm font-medium no-underline transition ${
               view === 'map'
-                ? 'border-amber-300/30 bg-amber-400/15 text-amber-50'
-                : 'border-white/10 bg-white/5 text-slate-300 hover:text-white'
+                ? 'border-[rgba(207,177,118,0.28)] bg-[var(--gs-gold-soft)] text-[#6e5426]'
+                : 'border-[var(--gs-border)] bg-white/72 text-[var(--gs-ink-soft)] hover:text-[var(--gs-ink)]'
             }`}
             params={{ username: data.username }}
             search={{ view: 'map' }}
@@ -143,13 +145,16 @@ function VaultRoute() {
         <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {data.cards.map((entry) => (
             <div key={entry.momentId} className="space-y-3">
-              <MomentCard3D moment={entry.card} />
+              <div className="gs-collectible-frame">
+                <MomentCard3D moment={entry.card} />
+              </div>
               <InfoPanel
                 title={entry.title}
                 description={`${entry.venueName} • ${entry.dateLabel} • ${entry.seatInfo}`}
+                appearance="collectible"
               >
                 <Link
-                  className="text-sm font-medium text-teal-200 no-underline"
+                  className="text-sm font-semibold text-[#e4c995]"
                   params={{ momentId: entry.momentId }}
                   to="/moments/$momentId"
                 >
@@ -171,18 +176,18 @@ function VaultRoute() {
             />
 
             {selectedVenue ? (
-              <div className="rounded-t-[2rem] border border-white/10 bg-slate-950/85 p-5 shadow-[0_-18px_60px_rgba(2,6,23,0.3)]">
+              <div className="gs-panel gs-panel-collectible rounded-[1.8rem]">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.26em] text-amber-200/80">
+                    <p className="text-xs uppercase tracking-[0.26em] text-[#e4c995]">
                       Venue moments
                     </p>
-                    <h2 className="mt-1 text-2xl font-semibold text-white">{selectedVenue.name}</h2>
-                    <p className="mt-2 text-sm text-slate-300">
+                    <h2 className="mt-1 text-2xl font-semibold text-[#fff7e8]">{selectedVenue.name}</h2>
+                    <p className="mt-2 text-sm text-[#d8cfbf]">
                       {[selectedVenue.city, selectedVenue.region].filter(Boolean).join(', ')}
                     </p>
                   </div>
-                  <div className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-100">
+                  <div className="gs-pill-collectible">
                     {selectedVenue.moments.length} cards
                   </div>
                 </div>
@@ -191,15 +196,15 @@ function VaultRoute() {
                   {selectedVenue.moments.map((entry) => (
                     <Link
                       key={entry.momentId}
-                      className="block rounded-[1.4rem] border border-white/10 bg-white/5 p-4 text-left no-underline transition hover:border-teal-300/30 hover:bg-white/8"
+                      className="gs-list-row-dark block rounded-[1.4rem] p-4 text-left no-underline transition"
                       params={{ momentId: entry.momentId }}
                       to="/moments/$momentId"
                     >
-                      <p className="text-base font-semibold text-white">{entry.title}</p>
-                      <p className="mt-2 text-sm text-slate-300">
+                      <p className="text-base font-semibold text-[#fff7e8]">{entry.title}</p>
+                      <p className="mt-2 text-sm text-[#d8cfbf]">
                         {entry.matchup} • {entry.finalScore}
                       </p>
-                      <p className="mt-2 text-sm text-slate-400">{entry.dateLabel}</p>
+                      <p className="mt-2 text-sm text-[#aa9f8a]">{entry.dateLabel}</p>
                     </Link>
                   ))}
                 </div>
@@ -217,9 +222,10 @@ function VaultRoute() {
       <InfoPanel
         title="Privacy rules"
         description="Profile visibility and per-moment visibility are enforced on the server before any cards or venue pins are returned to the client."
+        muted
       >
-        <div className="flex items-center gap-2 text-sm text-slate-300">
-          <Users className="h-4 w-4 text-slate-400" />
+        <div className="flex items-center gap-2 text-sm text-[var(--gs-ink-soft)]">
+          <Users className="h-4 w-4 text-[var(--gs-ink-faint)]" />
           {data.isOwner
             ? 'You are viewing your own vault.'
             : data.isFriend
@@ -233,9 +239,9 @@ function VaultRoute() {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[1.6rem] border border-white/10 bg-slate-950/55 p-4">
-      <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
+    <div className="gs-stat-card gs-stat-card-collectible">
+      <p className="text-xs uppercase tracking-[0.24em] text-[#b1a48f]">{label}</p>
+      <p className="mt-2 text-2xl font-semibold text-[#fff7e8]">{value}</p>
     </div>
   )
 }

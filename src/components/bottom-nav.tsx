@@ -9,9 +9,9 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md px-4 pb-4"
+      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md px-4 pb-4 md:hidden"
     >
-      <div className="grid grid-cols-3 gap-2 rounded-[2rem] border border-white/10 bg-slate-950/85 p-2 shadow-[0_25px_80px_rgba(2,6,12,0.55)] backdrop-blur-xl">
+      <div className="grid grid-cols-3 gap-2 rounded-[1.6rem] border border-[var(--gs-border)] bg-[rgba(255,252,246,0.92)] p-2 shadow-[0_22px_50px_rgba(21,24,33,0.16)] backdrop-blur-xl">
         <BottomNavLink
           icon={LayoutGrid}
           isActive={pathname === '/feed'}
@@ -52,31 +52,32 @@ function BottomNavLink({
   params?: { username: string }
   to: '/feed' | '/mint' | '/vault/$username'
 }) {
-  const className = `flex min-h-16 flex-col items-center justify-center rounded-[1.4rem] no-underline transition ${
+  const className = `flex min-h-[4.35rem] flex-col items-center justify-center rounded-[1.2rem] border text-xs font-medium transition ${
     isMint
-      ? 'bg-amber-400 text-slate-950 shadow-[0_12px_30px_rgba(251,191,36,0.35)] hover:bg-amber-300'
+      ? 'border-[rgba(207,177,118,0.26)] bg-[linear-gradient(180deg,#e3c990,#cfb176)] text-[#231a11] shadow-[0_14px_24px_rgba(207,177,118,0.22)]'
       : isActive
-        ? 'bg-teal-400/18 text-teal-100'
-        : 'text-slate-400 hover:bg-white/5 hover:text-slate-100'
+        ? 'border-[var(--gs-border-strong)] bg-white text-[var(--gs-ink)]'
+        : 'border-transparent bg-transparent text-[var(--gs-ink-soft)]'
   }`
+
+  const content = (
+    <>
+      <Icon className={`mb-1 ${isMint ? 'h-5 w-5' : 'h-[18px] w-[18px]'}`} />
+      <span className={isMint ? 'uppercase tracking-[0.2em]' : ''}>{label}</span>
+    </>
+  )
 
   if (to === '/vault/$username') {
     return (
       <Link className={className} params={params!} to={to}>
-        <Icon className={`mb-1 ${isMint ? 'h-5 w-5' : 'h-[18px] w-[18px]'}`} />
-        <span className={`text-xs font-medium ${isMint ? 'tracking-[0.2em] uppercase' : ''}`}>
-          {label}
-        </span>
+        {content}
       </Link>
     )
   }
 
   return (
     <Link className={className} to={to}>
-      <Icon className={`mb-1 ${isMint ? 'h-5 w-5' : 'h-[18px] w-[18px]'}`} />
-      <span className={`text-xs font-medium ${isMint ? 'tracking-[0.2em] uppercase' : ''}`}>
-        {label}
-      </span>
+      {content}
     </Link>
   )
 }

@@ -303,11 +303,12 @@ export function SlabShell({
   const theme = variantStyles[variant]
 
   return (
-    <div className={`relative h-full w-full overflow-hidden rounded-[2rem] bg-gradient-to-br ${theme.shell}`}>
-      <div className="absolute inset-[7px] rounded-[1.7rem] bg-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]" />
-      <div className={`absolute inset-[12px] rounded-[1.45rem] bg-gradient-to-br ${theme.panel}`} />
+    <div className={`relative h-full w-full overflow-hidden rounded-[2.15rem] bg-gradient-to-br ${theme.shell}`}>
+      <div className="absolute inset-[6px] rounded-[1.85rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.28),rgba(255,255,255,0.16))] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]" />
+      <div className={`absolute inset-[11px] rounded-[1.58rem] bg-gradient-to-br ${theme.panel}`} />
       <div className="pointer-events-none absolute inset-[10px] rounded-[1.55rem] border border-white/24" />
-      <div className="pointer-events-none absolute inset-x-6 top-2 h-10 rounded-full bg-white/30 blur-2xl" />
+      <div className="pointer-events-none absolute inset-x-6 top-2 h-10 rounded-full bg-white/40 blur-2xl" />
+      <div className="pointer-events-none absolute inset-x-10 bottom-2 h-8 rounded-full bg-black/18 blur-2xl" />
       <div
         className="pointer-events-none absolute inset-[14px] rounded-[1.4rem]"
         style={cardGlare(rotation, theme.glow)}
@@ -489,7 +490,7 @@ export function CardControls({
     <div className="grid grid-cols-4 gap-2 text-sm">
       <button
         type="button"
-        className="flex items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/75 px-3 py-2 text-slate-100 transition hover:border-teal-300/40"
+        className="flex items-center justify-center gap-1 rounded-[0.95rem] border border-[rgba(207,177,118,0.18)] bg-[rgba(17,20,27,0.72)] px-3 py-2 text-[#f6f0e3] transition hover:border-[rgba(207,177,118,0.32)]"
         onClick={onRotateLeft}
       >
         <ChevronLeft className="h-4 w-4" />
@@ -497,7 +498,7 @@ export function CardControls({
       </button>
       <button
         type="button"
-        className="flex items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/75 px-3 py-2 text-slate-100 transition hover:border-teal-300/40"
+        className="flex items-center justify-center gap-1 rounded-[0.95rem] border border-[rgba(207,177,118,0.18)] bg-[rgba(17,20,27,0.72)] px-3 py-2 text-[#f6f0e3] transition hover:border-[rgba(207,177,118,0.32)]"
         onClick={onFlip}
       >
         <Rotate3d className="h-4 w-4" />
@@ -505,7 +506,7 @@ export function CardControls({
       </button>
       <button
         type="button"
-        className="flex items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/75 px-3 py-2 text-slate-100 transition hover:border-teal-300/40"
+        className="flex items-center justify-center gap-1 rounded-[0.95rem] border border-[rgba(207,177,118,0.18)] bg-[rgba(17,20,27,0.72)] px-3 py-2 text-[#f6f0e3] transition hover:border-[rgba(207,177,118,0.32)]"
         onClick={onReset}
       >
         <RotateCcw className="h-4 w-4" />
@@ -513,7 +514,7 @@ export function CardControls({
       </button>
       <button
         type="button"
-        className="flex items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/75 px-3 py-2 text-slate-100 transition hover:border-teal-300/40"
+        className="flex items-center justify-center gap-1 rounded-[0.95rem] border border-[rgba(207,177,118,0.18)] bg-[rgba(17,20,27,0.72)] px-3 py-2 text-[#f6f0e3] transition hover:border-[rgba(207,177,118,0.32)]"
         onClick={onRotateRight}
       >
         Right

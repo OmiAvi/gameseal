@@ -1,9 +1,30 @@
-
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  color-scheme: light;
+  font-family: "Instrument Sans", "Avenir Next", "Segoe UI", sans-serif;
+  --gs-bg: #f3f1ec;
+  --gs-bg-elevated: #fbfaf7;
+  --gs-bg-panel: rgba(255, 252, 246, 0.92);
+  --gs-bg-panel-strong: #fffdf8;
+  --gs-ink: #151821;
+  --gs-ink-soft: #5f6676;
+  --gs-ink-faint: #8d93a3;
+  --gs-border: rgba(21, 24, 33, 0.1);
+  --gs-border-strong: rgba(21, 24, 33, 0.18);
+  --gs-action: #155eef;
+  --gs-action-soft: rgba(21, 94, 239, 0.12);
+  --gs-action-ink: #0b3180;
+  --gs-success-soft: #edf7ef;
+  --gs-warning-soft: #fff6df;
+  --gs-danger-soft: #fdf0ef;
+  --gs-gold: #cfb176;
+  --gs-gold-soft: rgba(207, 177, 118, 0.16);
+  --gs-shadow: 0 20px 50px rgba(19, 24, 39, 0.08);
+  --gs-shadow-lg: 0 28px 80px rgba(19, 24, 39, 0.12);
+  --gs-radius-xl: 1.75rem;
+  --gs-radius-lg: 1.25rem;
+  --gs-radius-md: 0.95rem;
 }
 
 * {
@@ -18,10 +39,10 @@ body,
 
 body {
   margin: 0;
+  color: var(--gs-ink);
   background:
-    radial-gradient(circle at top, rgba(13, 148, 136, 0.22), transparent 30%),
-    linear-gradient(180deg, #04111c 0%, #071826 52%, #02060c 100%);
-  color: #e2e8f0;
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 28%),
+    linear-gradient(180deg, #f8f6f2 0%, var(--gs-bg) 42%, #eeebe3 100%);
   overflow-x: hidden;
 }
 
@@ -30,14 +51,16 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(115deg, transparent 0%, rgba(251, 191, 36, 0.08) 50%, transparent 100%),
-    radial-gradient(circle at bottom, rgba(14, 165, 233, 0.12), transparent 32%);
-  opacity: 0.8;
+  background-image:
+    linear-gradient(rgba(21, 24, 33, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 24, 33, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 button,
@@ -45,4 +68,260 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Grotesk", "Instrument Sans", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+@layer components {
+  .gs-shell-frame {
+    @apply relative mx-auto flex min-h-screen w-full max-w-[88rem] flex-col px-4 pb-28 pt-4 sm:px-6 lg:px-8;
+  }
+
+  .gs-shell-topbar {
+    @apply sticky top-4 z-30 flex items-center justify-between gap-4 rounded-[1.65rem] border px-4 py-3 backdrop-blur-xl sm:px-5;
+    border-color: var(--gs-border);
+    background: linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(255, 250, 242, 0.84));
+    box-shadow: var(--gs-shadow);
+  }
+
+  .gs-shell-brand {
+    @apply flex min-w-0 items-center gap-3;
+  }
+
+  .gs-shell-brandmark {
+    @apply flex h-11 w-11 items-center justify-center rounded-[1rem] text-[11px] font-semibold uppercase tracking-[0.34em] text-white;
+    background: linear-gradient(145deg, #171b26, #313849);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 14px 30px rgba(21, 24, 33, 0.22);
+  }
+
+  .gs-nav-chip {
+    @apply rounded-full border px-3.5 py-2 text-sm font-medium transition;
+    border-color: var(--gs-border);
+    color: var(--gs-ink-soft);
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .gs-nav-chip:hover {
+    border-color: var(--gs-border-strong);
+    color: var(--gs-ink);
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  .gs-page {
+    @apply mx-auto w-full max-w-6xl space-y-5 py-2;
+  }
+
+  .gs-page-narrow {
+    @apply mx-auto w-full max-w-3xl space-y-5 py-2;
+  }
+
+  .gs-page-grid {
+    @apply grid gap-5 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)];
+  }
+
+  .gs-intro {
+    @apply relative overflow-hidden rounded-[2rem] border px-5 py-5 sm:px-6 sm:py-6;
+    border-color: var(--gs-border);
+    box-shadow: var(--gs-shadow);
+  }
+
+  .gs-intro::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), transparent 48%);
+  }
+
+  .gs-intro-utility {
+    background:
+      radial-gradient(circle at top right, rgba(21, 94, 239, 0.1), transparent 30%),
+      linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(250, 248, 242, 0.98));
+  }
+
+  .gs-intro-collectible {
+    color: #f7f1e3;
+    border-color: rgba(207, 177, 118, 0.28);
+    background:
+      radial-gradient(circle at top, rgba(207, 177, 118, 0.22), transparent 32%),
+      linear-gradient(160deg, #15181f 0%, #1e232e 58%, #232835 100%);
+    box-shadow: 0 24px 70px rgba(19, 24, 39, 0.2);
+  }
+
+  .gs-panel {
+    @apply rounded-[1.6rem] border p-5;
+    border-color: var(--gs-border);
+    box-shadow: var(--gs-shadow);
+  }
+
+  .gs-panel-utility {
+    background: linear-gradient(180deg, var(--gs-bg-panel-strong), rgba(255, 252, 246, 0.94));
+  }
+
+  .gs-panel-muted {
+    background: linear-gradient(180deg, rgba(249, 246, 240, 0.96), rgba(244, 240, 232, 0.96));
+  }
+
+  .gs-panel-collectible {
+    color: #f4efe2;
+    border-color: rgba(207, 177, 118, 0.22);
+    background:
+      linear-gradient(180deg, rgba(26, 31, 41, 0.94), rgba(18, 21, 28, 0.97));
+    box-shadow: 0 20px 60px rgba(10, 12, 18, 0.24);
+  }
+
+  .gs-collectible-frame {
+    @apply relative overflow-hidden rounded-[1.9rem] border p-5;
+    border-color: rgba(207, 177, 118, 0.24);
+    background:
+      radial-gradient(circle at top, rgba(207, 177, 118, 0.18), transparent 24%),
+      linear-gradient(160deg, #171b24, #0f131a 72%);
+    box-shadow: 0 30px 90px rgba(8, 10, 18, 0.24);
+  }
+
+  .gs-collectible-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 38%);
+  }
+
+  .gs-stat-grid {
+    @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .gs-stat-card {
+    @apply rounded-[1.35rem] border px-4 py-4;
+    border-color: var(--gs-border);
+    background: rgba(255, 253, 248, 0.74);
+    box-shadow: var(--gs-shadow);
+  }
+
+  .gs-stat-card-collectible {
+    border-color: rgba(207, 177, 118, 0.2);
+    background: rgba(20, 24, 31, 0.78);
+    box-shadow: 0 20px 48px rgba(10, 12, 18, 0.18);
+  }
+
+  .gs-form-label {
+    @apply block space-y-2 text-sm;
+    color: var(--gs-ink);
+  }
+
+  .gs-form-label-dark {
+    color: #ece7db;
+  }
+
+  .gs-field,
+  .gs-select,
+  .gs-textarea {
+    @apply w-full rounded-[1rem] border px-4 py-3 outline-none transition;
+    border-color: var(--gs-border);
+    background: rgba(255, 255, 255, 0.88);
+    color: var(--gs-ink);
+  }
+
+  .gs-textarea {
+    @apply min-h-28 resize-y;
+  }
+
+  .gs-field::placeholder,
+  .gs-textarea::placeholder {
+    color: var(--gs-ink-faint);
+  }
+
+  .gs-field:focus,
+  .gs-select:focus,
+  .gs-textarea:focus {
+    border-color: rgba(21, 94, 239, 0.34);
+    box-shadow: 0 0 0 4px rgba(21, 94, 239, 0.09);
+  }
+
+  .gs-field-dark,
+  .gs-select-dark,
+  .gs-textarea-dark {
+    border-color: rgba(207, 177, 118, 0.18);
+    background: rgba(17, 20, 27, 0.78);
+    color: #f6f0e3;
+  }
+
+  .gs-field-dark::placeholder,
+  .gs-textarea-dark::placeholder {
+    color: rgba(246, 240, 227, 0.5);
+  }
+
+  .gs-button-primary {
+    @apply inline-flex items-center justify-center rounded-[1rem] px-4 py-3 text-sm font-semibold transition;
+    color: white;
+    background: linear-gradient(180deg, #1b67ff, #155eef);
+    box-shadow: 0 16px 30px rgba(21, 94, 239, 0.2);
+  }
+
+  .gs-button-primary:hover {
+    background: linear-gradient(180deg, #2c74ff, #1d65f2);
+  }
+
+  .gs-button-secondary {
+    @apply inline-flex items-center justify-center rounded-[1rem] border px-4 py-3 text-sm font-semibold transition;
+    border-color: var(--gs-border);
+    color: var(--gs-ink);
+    background: rgba(255, 255, 255, 0.68);
+  }
+
+  .gs-button-secondary:hover {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .gs-button-gold {
+    @apply inline-flex items-center justify-center rounded-[1rem] px-4 py-3 text-sm font-semibold transition;
+    color: #251c10;
+    background: linear-gradient(180deg, #e3c990, #cfb176);
+    box-shadow: 0 18px 36px rgba(207, 177, 118, 0.22);
+  }
+
+  .gs-button-gold:hover {
+    background: linear-gradient(180deg, #ecd5a5, #d6bb85);
+  }
+
+  .gs-pill {
+    @apply rounded-full border px-3 py-1.5 text-xs font-medium;
+    border-color: var(--gs-border);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--gs-ink-soft);
+  }
+
+  .gs-pill-collectible {
+    border-color: rgba(207, 177, 118, 0.24);
+    background: rgba(255, 255, 255, 0.07);
+    color: #f0dfbf;
+  }
+
+  .gs-list-row {
+    @apply rounded-[1.2rem] border p-4 transition;
+    border-color: var(--gs-border);
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .gs-list-row:hover {
+    border-color: var(--gs-border-strong);
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .gs-list-row-dark {
+    border-color: rgba(207, 177, 118, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .gs-list-row-dark:hover {
+    border-color: rgba(207, 177, 118, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+  }
 }

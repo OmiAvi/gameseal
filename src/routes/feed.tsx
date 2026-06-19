@@ -9,10 +9,7 @@ import { getFeedSnapshot } from '#/server/app.functions'
 export const Route = createFileRoute('/feed')({
   loader: () => getFeedSnapshot(),
   pendingComponent: () => (
-    <StateCard
-      title="Loading the feed"
-      message="Pulling the latest public moments from The Vault."
-    />
+    <StateCard title="Loading the feed" message="Pulling the latest public moments from The Vault." />
   ),
   errorComponent: ({ error }) => (
     <StateCard
@@ -159,13 +156,13 @@ function FeedRoute() {
   }
 
   return (
-    <div className="mx-auto max-w-md space-y-5 lg:max-w-5xl">
+    <div className="gs-page">
       <PageIntro
         eyebrow="Live now"
         title="Friend feed"
-        description="Visible moments from your collector circle, with reactions, comments, and shared game-day attendance."
+        description="A cleaner social workspace up front, with each card still treated like a collectible object once it lands in the stream."
         action={
-          <div className="rounded-full border border-amber-300/25 bg-amber-400/10 p-3 text-amber-100">
+          <div className="rounded-[1.2rem] border border-[var(--gs-border)] bg-white/72 p-3 text-[var(--gs-action)]">
             <Sparkles className="h-5 w-5" />
           </div>
         }
@@ -183,162 +180,164 @@ function FeedRoute() {
         />
       ) : null}
 
-      {moments.map((moment) => (
-        <section
-          key={moment.momentId}
-          className="space-y-4 rounded-[2rem] border border-white/10 bg-slate-950/55 p-4 shadow-[0_18px_60px_rgba(2,6,12,0.32)]"
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-base font-semibold text-white">{moment.creator.displayName}</p>
-              <p className="mt-1 text-sm text-slate-400">@{moment.creator.username}</p>
-              <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
-                {moment.venueName} • {moment.dateLabel}
-              </p>
+      <div className="space-y-5">
+        {moments.map((moment) => (
+          <section key={moment.momentId} className="grid gap-5 xl:grid-cols-[24rem_minmax(0,1fr)]">
+            <div className="gs-collectible-frame">
+              <MomentCard3D moment={moment.card} />
             </div>
-            <Link
-              className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 no-underline transition hover:bg-white/5"
-              params={{ username: moment.creator.username }}
-              to="/vault/$username"
-            >
-              Vault
-            </Link>
-          </div>
 
-          <MomentCard3D moment={moment.card} />
-
-          <InfoPanel
-            title={moment.title}
-            description={`${moment.matchup} • ${moment.finalScore} • ${moment.seatInfo}`}
-          >
             <div className="space-y-4">
-              <p className="text-sm leading-6 text-slate-200">
-                {moment.caption?.trim() || 'No story added for this moment yet.'}
-              </p>
+              <InfoPanel
+                title={moment.title}
+                description={`${moment.matchup} • ${moment.finalScore} • ${moment.seatInfo}`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-base font-semibold text-[var(--gs-ink)]">
+                      {moment.creator.displayName}
+                    </p>
+                    <p className="mt-1 text-sm text-[var(--gs-ink-soft)]">
+                      @{moment.creator.username}
+                    </p>
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-[var(--gs-ink-faint)]">
+                      {moment.venueName} • {moment.dateLabel}
+                    </p>
+                  </div>
+                  <Link
+                    className="gs-button-secondary px-3 py-2"
+                    params={{ username: moment.creator.username }}
+                    to="/vault/$username"
+                  >
+                    Vault
+                  </Link>
+                </div>
 
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {moment.reactions.map((reaction) => (
+                <p className="mt-5 text-sm leading-6 text-[var(--gs-ink-soft)]">
+                  {moment.caption?.trim() || 'No story added for this moment yet.'}
+                </p>
+
+                <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {moment.reactions.map((reaction) => (
+                    <button
+                      key={reaction.type}
+                      type="button"
+                      className={`rounded-[1rem] border px-3 py-3 text-left text-sm transition ${
+                        reaction.viewerHasReacted
+                          ? 'border-[rgba(207,177,118,0.28)] bg-[var(--gs-gold-soft)] text-[var(--gs-action-ink)]'
+                          : 'border-[var(--gs-border)] bg-white/70 text-[var(--gs-ink)]'
+                      }`}
+                      onClick={() => {
+                        void toggleReaction(moment.momentId, reaction.type)
+                      }}
+                    >
+                      <span className="block font-medium capitalize">{reaction.type}</span>
+                      <span className="mt-1 block text-xs opacity-80">{reaction.count}</span>
+                    </button>
+                  ))}
+                </div>
+              </InfoPanel>
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                <InfoPanel
+                  title="Reactions and comments"
+                  description={`${moment.reactionTotal} reactions • ${moment.commentCount} comments`}
+                  muted
+                >
+                  <div className="flex items-center gap-2 text-sm text-[var(--gs-ink-soft)]">
+                    <Flame className="h-4 w-4 text-[var(--gs-action)]" />
+                    Conversation stays attached to the collectible.
+                  </div>
+
+                  <div className="mt-4 space-y-3">
+                    {moment.comments.length === 0 ? (
+                      <p className="text-sm text-[var(--gs-ink-soft)]">
+                        No comments yet. Start the thread.
+                      </p>
+                    ) : (
+                      moment.comments.map((comment) => (
+                        <div key={comment.id} className="gs-list-row">
+                          <p className="text-sm font-medium text-[var(--gs-ink)]">
+                            {comment.authorDisplayName}
+                          </p>
+                          <p className="mt-2 text-sm leading-6 text-[var(--gs-ink-soft)]">
+                            {comment.body}
+                          </p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  <div className="mt-4 flex gap-2">
+                    <input
+                      className="gs-field flex-1"
+                      placeholder="Add a comment"
+                      value={commentDrafts[moment.momentId] || ''}
+                      onChange={(event) =>
+                        setCommentDrafts((current) => ({
+                          ...current,
+                          [moment.momentId]: event.target.value,
+                        }))
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="gs-button-primary px-4 py-3"
+                      onClick={() => {
+                        void addComment(moment.momentId)
+                      }}
+                    >
+                      Post
+                    </button>
+                  </div>
+                </InfoPanel>
+
+                <InfoPanel
+                  title="Shared game attendees"
+                  description={`${moment.attendeeSummary.totalCount} total checked in${moment.attendeeSummary.friendCount > 0 ? ` • ${moment.attendeeSummary.friendCount} friends were there too` : ''}`}
+                  muted
+                >
+                  <div className="flex items-center gap-2 text-sm text-[var(--gs-ink-soft)]">
+                    <Ticket className="h-4 w-4 text-[var(--gs-action)]" />
+                    Attendance adds shared context without changing the saved card.
+                  </div>
+
+                  {moment.attendeeSummary.friendNames.length > 0 ? (
+                    <p className="mt-4 text-sm text-[var(--gs-ink-soft)]">
+                      Seen with {moment.attendeeSummary.friendNames.join(', ')}
+                    </p>
+                  ) : null}
+
                   <button
-                    key={reaction.type}
                     type="button"
-                    className={`rounded-[1.1rem] border px-3 py-3 text-sm transition ${
-                      reaction.viewerHasReacted
-                        ? 'border-amber-300/35 bg-amber-400/15 text-amber-50'
-                        : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+                    className={`mt-4 w-full rounded-[1rem] px-4 py-3 text-sm font-semibold transition ${
+                      moment.attendeeSummary.viewerWasThere
+                        ? 'bg-[var(--gs-ink)] text-white'
+                        : 'gs-button-gold'
                     }`}
                     onClick={() => {
-                      void toggleReaction(moment.momentId, reaction.type)
+                      void markWasThere(moment.momentId)
                     }}
                   >
-                    <span className="block font-medium capitalize">{reaction.type}</span>
-                    <span className="mt-1 block text-xs opacity-80">{reaction.count}</span>
+                    {moment.attendeeSummary.viewerWasThere ? 'You were there too' : 'I was there too'}
                   </button>
-                ))}
-              </div>
 
-              <div className="rounded-[1.4rem] border border-white/10 bg-white/5 p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-semibold text-white">
-                      Reactions and comments
-                    </p>
-                    <p className="mt-1 text-sm text-slate-400">
-                      {moment.reactionTotal} reactions • {moment.commentCount} comments
-                    </p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <Link
+                      className="text-sm font-semibold text-[var(--gs-action)]"
+                      params={{ momentId: moment.momentId }}
+                      to="/moments/$momentId"
+                    >
+                      Open full moment
+                    </Link>
+                    <MessageSquareMore className="h-4 w-4 text-[var(--gs-ink-faint)]" />
                   </div>
-                  <Flame className="h-5 w-5 text-amber-200" />
-                </div>
-
-                <div className="mt-4 space-y-3">
-                  {moment.comments.length === 0 ? (
-                    <p className="text-sm text-slate-400">No comments yet. Start the thread.</p>
-                  ) : (
-                    moment.comments.map((comment) => (
-                      <div
-                        key={comment.id}
-                        className="rounded-[1.1rem] border border-white/10 bg-slate-950/45 p-3"
-                      >
-                        <p className="text-sm font-medium text-white">
-                          {comment.authorDisplayName}
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-slate-300">{comment.body}</p>
-                      </div>
-                    ))
-                  )}
-                </div>
-
-                <div className="mt-4 flex gap-2">
-                  <input
-                    className="flex-1 rounded-[1.1rem] border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500"
-                    placeholder="Add a comment"
-                    value={commentDrafts[moment.momentId] || ''}
-                    onChange={(event) =>
-                      setCommentDrafts((current) => ({
-                        ...current,
-                        [moment.momentId]: event.target.value,
-                      }))
-                    }
-                  />
-                  <button
-                    type="button"
-                    className="rounded-[1.1rem] bg-teal-400/15 px-4 py-3 text-sm font-medium text-teal-100 transition hover:bg-teal-400/25"
-                    onClick={() => {
-                      void addComment(moment.momentId)
-                    }}
-                  >
-                    Post
-                  </button>
-                </div>
-              </div>
-
-              <div className="rounded-[1.4rem] border border-white/10 bg-white/5 p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-semibold text-white">Shared game attendees</p>
-                    <p className="mt-1 text-sm text-slate-400">
-                      {moment.attendeeSummary.totalCount} total checked in
-                      {moment.attendeeSummary.friendCount > 0
-                        ? ` • ${moment.attendeeSummary.friendCount} friends were there too`
-                        : ''}
-                    </p>
-                    {moment.attendeeSummary.friendNames.length > 0 ? (
-                      <p className="mt-2 text-sm text-slate-300">
-                        Seen with {moment.attendeeSummary.friendNames.join(', ')}
-                      </p>
-                    ) : null}
-                  </div>
-                  <Ticket className="h-5 w-5 text-teal-200" />
-                </div>
-
-                <button
-                  type="button"
-                  className={`mt-4 w-full rounded-[1.1rem] px-4 py-3 text-sm font-medium transition ${
-                    moment.attendeeSummary.viewerWasThere
-                      ? 'bg-teal-400/15 text-teal-100'
-                      : 'bg-amber-400 text-slate-950 hover:bg-amber-300'
-                  }`}
-                  onClick={() => {
-                    void markWasThere(moment.momentId)
-                  }}
-                >
-                  {moment.attendeeSummary.viewerWasThere ? 'You were there too' : 'I was there too'}
-                </button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Link
-                  className="text-sm font-medium text-teal-200 no-underline"
-                  params={{ momentId: moment.momentId }}
-                  to="/moments/$momentId"
-                >
-                  Open full moment
-                </Link>
-                <MessageSquareMore className="h-4 w-4 text-slate-500" />
+                </InfoPanel>
               </div>
             </div>
-          </InfoPanel>
-        </section>
-      ))}
+          </section>
+        ))}
+      </div>
     </div>
   )
 }

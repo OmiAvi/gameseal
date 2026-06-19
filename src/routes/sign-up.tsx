@@ -44,91 +44,67 @@ function SignUpRoute() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="gs-page-narrow">
       <PageIntro
-        eyebrow="Create account"
-        title="Join GameSeal"
-        description="Set up email/password access and reserve a username for your collector profile."
+        eyebrow="New collector"
+        title="Create your GameSeal account"
+        description="Reserve your display name and username, then start minting moments into premium collectibles."
       />
 
-      <InfoPanel
-        title="Create your profile"
-        description="Your Better Auth account creates a matching GameSeal profile in D1 right after sign up."
-      >
-        <form
-          className="space-y-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            void onSubmit(new FormData(event.currentTarget))
-          }}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <InfoPanel
+          title="Create your profile"
+          description="Signing up creates the auth account and matching collector profile in D1 right away."
         >
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Display name</span>
-            <input
-              required
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="displayName"
-              type="text"
-            />
-          </label>
-
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Username</span>
-            <input
-              required
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="username"
-              type="text"
-            />
-          </label>
-
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Email</span>
-            <input
-              required
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="email"
-              type="email"
-            />
-          </label>
-
-          <label className="block space-y-2 text-sm text-slate-200">
-            <span>Password</span>
-            <input
-              required
-              minLength={8}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0"
-              name="password"
-              type="password"
-            />
-          </label>
-
-          {error ? (
-            <StateCard title="Sign-up failed" message={error} tone="danger" />
-          ) : null}
-
-          <button
-            type="submit"
-            className="w-full rounded-2xl bg-amber-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-amber-300 disabled:opacity-60"
-            disabled={isSubmitting}
+          <form
+            className="space-y-4"
+            onSubmit={(event) => {
+              event.preventDefault()
+              void onSubmit(new FormData(event.currentTarget))
+            }}
           >
-            {isSubmitting ? 'Creating account...' : 'Create account'}
-          </button>
-        </form>
-      </InfoPanel>
+            <label className="gs-form-label">
+              <span>Display name</span>
+              <input required className="gs-field" name="displayName" type="text" />
+            </label>
 
-      <InfoPanel
-        title="Already have an account?"
-        description="Sign back in with your existing email and password."
-      >
-        <Link
-          to="/sign-in"
-          search={{ redirect: search.redirect }}
-          className="text-sm font-medium text-teal-200 no-underline"
+            <label className="gs-form-label">
+              <span>Username</span>
+              <input required className="gs-field" name="username" type="text" />
+            </label>
+
+            <label className="gs-form-label">
+              <span>Email</span>
+              <input required className="gs-field" name="email" type="email" />
+            </label>
+
+            <label className="gs-form-label">
+              <span>Password</span>
+              <input required minLength={8} className="gs-field" name="password" type="password" />
+            </label>
+
+            {error ? <StateCard title="Sign-up failed" message={error} tone="danger" /> : null}
+
+            <button type="submit" className="gs-button-primary w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating account...' : 'Create account'}
+            </button>
+          </form>
+        </InfoPanel>
+
+        <InfoPanel
+          title="Already inside?"
+          description="Use your existing email and password to get back to your collector workspace."
+          muted
         >
-          Go to sign in
-        </Link>
-      </InfoPanel>
+          <Link
+            to="/sign-in"
+            search={{ redirect: search.redirect }}
+            className="inline-flex text-sm font-semibold text-[var(--gs-action)]"
+          >
+            Go to sign in
+          </Link>
+        </InfoPanel>
+      </div>
     </div>
   )
 }
