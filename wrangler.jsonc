@@ -8,7 +8,7 @@
     {
       "binding": "DB",
       "database_name": "gameseal-db",
-      "database_id": "replace-with-your-d1-database-id",
+      "database_id": "19df4b75-21e7-4584-86d7-8faedda3f0c4",
       "migrations_dir": "drizzle"
     }
   ],
