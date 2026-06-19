@@ -26,11 +26,11 @@ export type CurrentUser = NonNullable<SessionResult> & {
   profile: ProfileRecord | null
 }
 
-function getBindings() {
+export function getBindings() {
   return env
 }
 
-function getDb() {
+export function getDb() {
   return createDb(getBindings().DB)
 }
 

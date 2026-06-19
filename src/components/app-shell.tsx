@@ -15,6 +15,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
+  const isAuthRoute = pathname === '/sign-in' || pathname === '/sign-up'
+
+  if (isAuthRoute) {
+    return <div className="min-h-screen text-[var(--gs-ink)]">{children}</div>
+  }
 
   return (
     <div className="min-h-screen text-[var(--gs-ink)]">

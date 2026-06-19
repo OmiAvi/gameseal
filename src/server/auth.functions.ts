@@ -2,11 +2,13 @@ import { eq } from 'drizzle-orm'
 import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
-import { createDb } from '#/db/client'
 import { profiles } from '#/db/schema'
 import { updateProfileSchema } from '#/lib/auth-profile'
-import { env } from 'cloudflare:workers'
-import { getAuth, requireCurrentUser } from './auth'
+import { getAuth, getCurrentUser, getDb, requireCurrentUser } from './auth'
+
+export const getViewerSnapshot = createServerFn({ method: 'GET' }).handler(
+  async () => getCurrentUser(),
+)
 
 export const getCurrentUserSnapshot = createServerFn({ method: 'GET' }).handler(
   async () => requireCurrentUser(),
@@ -27,7 +29,7 @@ export const updateCurrentProfile = createServerFn({ method: 'POST' })
       },
     })
 
-    const db = createDb(env.DB)
+    const db = getDb()
     const now = new Date()
 
     await db

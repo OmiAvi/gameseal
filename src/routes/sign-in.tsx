@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
-import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
+import { Link, createFileRoute, redirect, useRouter } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { InfoPanel, PageIntro, StateCard } from '#/components/route-state'
 import { authClient } from '#/lib/auth-client'
+import { getViewerSnapshot } from '#/server/auth.functions'
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -12,6 +13,12 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/sign-in')({
   validateSearch: searchSchema,
+  beforeLoad: async () => {
+    const viewer = await getViewerSnapshot()
+    if (viewer) {
+      throw redirect({ to: '/feed' })
+    }
+  },
   component: SignInRoute,
 })
 
@@ -38,7 +45,7 @@ function SignInRoute() {
       return
     }
 
-    await router.navigate({ to: search.redirect || '/settings' })
+    await router.navigate({ to: search.redirect || '/feed' })
   }
 
   return (
